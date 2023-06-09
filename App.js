@@ -1,20 +1,52 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import Home from "./components/Home";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { NavigationContainer } from "@react-navigation/native";
+import { useFonts } from 'expo-font';
+import BottomTab from "./components/BottomTab";
+import Course from "./components/Course";
+import Login from "./components/Login";
+import Otp from "./components/Otp";
+import SignUp from "./components/SignUp";
 
-export default function App() {
+import CameraPage from "./components/CameraPage";
+import Auth from "./components/Auth";
+
+
+const App = () => {
+  const [loaded] = useFonts({
+    Poppins: require('./assets/fonts/Poppins-Regular.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    // <SafeAreaProvider style={styles.container}>
+      <NavigationContainer>
+      {/* <CameraPage /> */}
+  
+        {/* <BottomTab /> */}
+        <Auth />
+        {/* <Login /> */}
+        {/* <Course /> */}
+        {/* <Otp /> */}
+        {/* <SignUp /> */}
+      </NavigationContainer>
+    // </SafeAreaProvider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // backgroundColor: "#ffffff",
+    alignItems: "center",
+    height:'100%',
+    width:'100%',
+    fontFamily:'Poppins',
   },
 });
+
+export default App;
