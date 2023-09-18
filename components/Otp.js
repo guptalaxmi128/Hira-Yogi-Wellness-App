@@ -12,14 +12,14 @@ const Otp = ({ navigation }) => {
   return (
     <>
       <View style={styles.container}>
-        <View style={{ width: 100, height: 100 }}>
+        <View style={{ width: 320, height: 150 }}>
           <Image
-            source={require("../assets/logo.jpg")}
+            source={require("../assets/logo.png")}
             style={{
-              height: 100,
-              width: 100,
-              borderWidth: 1,
-              borderColor: "#333787",
+              height: 150,
+              width: 320,
+              // borderWidth: 1,
+              // borderColor: "#333787",
             }}
             resizeMode="cover"
           />
@@ -73,7 +73,7 @@ const Otp = ({ navigation }) => {
                 style={{
                   width: "100%",
                   height: 50,
-                  backgroundColor: "#333787",
+                  backgroundColor: "#e08a44",
                   flexDirection: "row",
                   alignItems: "center",
                   // padding: 20,
@@ -87,7 +87,7 @@ const Otp = ({ navigation }) => {
                     padding: 4,
                     width: "100%",
                     height: 30,
-                    fontSize: 14,
+                    fontSize: 16,
                     fontWeight: "bold",
                     color: "#fff",
                     alignItems: "center",
@@ -140,7 +140,7 @@ const Otp = ({ navigation }) => {
             />
           </View>
            <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
-          <View style={{ marginTop: 60, alignItems: "center" }}>
+          <View style={{ marginTop: 40, alignItems: "center" }}>
             <Text
               style={{ fontSize: 12, fontFamily: "Poppins", fontWeight: "400" }}
             >

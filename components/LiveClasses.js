@@ -83,7 +83,7 @@ const LiveClasses = () => {
           >
             <Image
               style={{ width: 65, height: 65, borderRadius: 15,borderWidth:0.4,borderColor:"#2A3C79" }}
-              source={require("../assets/logo.jpg")}
+              source={require("../assets/logo.png")}
               resizeMode="cover"
             />
           </View>

@@ -1,7 +1,6 @@
-// import React, { useState } from "react";
+
 import React, { useState, useCallback, useEffect } from "react";
-// import { useRoute } from "@react-navigation/native";
-import YoutubePlayer from 'react-native-youtube-iframe';
+import YoutubePlayer from "react-native-youtube-iframe";
 import {
   View,
   Text,
@@ -9,107 +8,96 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
- 
 } from "react-native";
-
 import Overview from "./Overview";
-import LiveClasses from "./LiveClasses";
 import Classes from "./Classes";
 import CustomSwitch from "./CustomSwitch";
-// import { ScrollView } from "react-native-gesture-handler";
-import YouTubePlayer from "./YouTubePlayer";
+import Header from "./Header";
 
-const Course = () => {
- const [courseTab,setCourseTab]=useState(1);
+const Course = ({ route }) => {
+  const { id } = route.params;
+  const [courseTab, setCourseTab] = useState(1);
+  const [playing, setPlaying] = useState(false);
+ 
+  // console.log(id)
 
-
-   // const param =useRoute().params;
-   const [playing,setPlaying]=useState(false);
-    
   //    useEffect(()=>{
   //   console.log("....",param)
   //    },[])
-   
-     const onStateChange = useCallback((state) => {
-      if (state === "ended") {
-        setPlaying(false);
+
+  const onStateChange = useCallback((state) => {
+    if (state === "ended") {
+      setPlaying(false);
       //   Alert.alert("video has finished playing!");
-      }
-    }, []);
+    }
+  }, []);
+
+  const onSelectSwitch = (value) => {
+    setCourseTab(value);
+  };
 
 
-  const onSelectSwitch=(value) =>{
-     setCourseTab(value);
-  }
 
   return (
     <>
-    <ScrollView>
-      <View style={styles.container}>
-        <View
-          style={[
-            styles.shadowContainerStyle,
-            {
-              width: 350,
-              height: 160,
-              backgroundColor: "#fff",
-              alignContent: "center",
-              borderRadius: 20,
-            
-            },
-          ]}
-        >
-        
-       
-<YoutubePlayer
-     height={160}
- 
-    play={playing}
-     videoId={'8Nh9Oi1qQiY'}
-     onChangeState={onStateChange}
-      />
-        </View>
-       
-        <View style={{  marginVertical:20 }}>
+      <Header title={"Course"} icon={require("../assets/back.png")} />
+      <ScrollView style={{backgroundColor:'#fff'}}>
+        <View style={styles.container}>
           <View
-           style={[
-             styles.shadowContainerStyle,
+            style={[
+              styles.shadowContainerStyle,
               {
                 width: 350,
-                height: 45,
-                borderRadius: 25,
-                flexDirection: "row",
-                justifyContent: "space-between",
+                height: 160,
                 backgroundColor: "#fff",
-                alignItems: "center",
-                padding: 5,
-                marginBottom:5,
+                alignContent: "center",
+                borderRadius: 20,
               },
             ]}
           >
-          <CustomSwitch selectionMode={1} 
-            option1="Overview"
-            option2="Live Classes"
-            option3="Classes"
-            onSelectSwitch={onSelectSwitch}
-          />
+            <YoutubePlayer
+              height={160}
+              play={playing}
+              videoId={"d5SKZQijWJw"}
+              onChangeState={onStateChange}
+            />
+          </View>
 
-  
-      
+          <View style={{ marginVertical: 20 }}>
+            <View
+              style={[
+                styles.shadowContainerStyle,
+                {
+                  width: 350,
+                  height: 45,
+                  borderRadius: 25,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  backgroundColor: "#fff",
+                  alignItems: "center",
+                  padding: 5,
+                  marginBottom: 5,
+                },
+              ]}
+            >
+              <CustomSwitch
+                selectionMode={1}
+                option1="Overview"
+                option2="Classes"
+                onSelectSwitch={onSelectSwitch}
+              />
+            </View>
+            {courseTab == 1 && <Overview  courseId={id} />}
+            {courseTab == 2 && <Classes />}
+          </View>
         </View>
-        {courseTab == 1 && <Overview />}
-        {courseTab == 2 && <LiveClasses />}
-        {courseTab == 3 &&  <Classes />}
-        </View>
-     
-      </View>
       </ScrollView>
       <View style={{ backgroundColor: "#fff" }}>
         <View
           style={{
             width: 350,
             height: 50,
-            backgroundColor: "#333787",
+            backgroundColor: "#e08a44",
             flexDirection: "row",
             alignItems: "center",
             // padding: 20,
@@ -142,14 +130,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
     padding: 20,
   },
   shadowContainerStyle: {
-    // borderWidth: 1,
     borderRadius: 20,
-    // borderColor: "#333787",
     borderBottomWidth: 0,
     shadowColor: "#333787",
     shadowOffset: { width: 0, height: 2 },
@@ -158,7 +142,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   backgroundVideo: {
-   borderRadius:20,
+    borderRadius: 20,
   },
   // tabName: {
   //   fontFamily: "Poppins",
@@ -173,12 +157,11 @@ const styles = StyleSheet.create({
   //   flex: 1,
   //   color: "#333787",
   // },
- 
-  video:{
-    flex:1,
-    alignSelf:'stretch'
-  }
 
+  video: {
+    flex: 1,
+    alignSelf: "stretch",
+  },
 });
 
 export default Course;

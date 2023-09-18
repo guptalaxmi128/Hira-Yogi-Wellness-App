@@ -29,7 +29,7 @@ export default function CustomSwitch({
         onPress={() => updateSwitchData(1)}
         style={{
           flex: 1,
-          backgroundColor: getSelectionMode == 1 ? "#e1e5f5" : "white",
+          backgroundColor: getSelectionMode == 1 ? "#F3E6DA" : "white",
           borderRadius: 20,
           justifyContent: "center",
           alignItems: "center",
@@ -38,14 +38,15 @@ export default function CustomSwitch({
         <Text
           style={{
             fontFamily: "Poppins",
-            fontSize: 13,
-            color: getSelectionMode == 1 ? "#333787" : "gray",
+            fontSize: 16,
+            // fontWeight:'bold',
+            color: getSelectionMode == 1 ? "#E99548" : "gray",
           }}
         >
           {option1}
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         activeOpacity={1}
         onPress={() => updateSwitchData(2)}
         style={{
@@ -65,13 +66,13 @@ export default function CustomSwitch({
         >
           {option2}
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity
         activeOpacity={1}
-        onPress={() => updateSwitchData(3)}
+        onPress={() => updateSwitchData(2)}
         style={{
           flex: 1,
-          backgroundColor: getSelectionMode == 3 ? "#e1e5f5" : "white",
+          backgroundColor: getSelectionMode == 2 ? "#F3E6DA" : "white",
           borderRadius: 20,
           justifyContent: "center",
           alignItems: "center",
@@ -80,11 +81,12 @@ export default function CustomSwitch({
         <Text
           style={{
             fontFamily: "Poppins",
-            fontSize: 13,
-            color: getSelectionMode == 3 ? "#333787" : "gray",
+            fontSize: 16,
+            // fontWeight:'bold',
+            color: getSelectionMode == 2 ? "#E99548" : "gray",
           }}
         >
-          {option3}
+          {option2}
         </Text>
       </TouchableOpacity>
     </View>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,192 +6,198 @@ import {
   TextInput,
   Image,
   ScrollView,
+  FlatList,
+  TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { Avatar } from "react-native-elements";
-
 import CarouselItem from "./CarouselItem";
-
-
+import {
+  useGetAllCourseQuery,
+  useGetAppUserQuery,
+  useGetAppointmentBannerQuery,
+} from "../services/signUpApi";
 
 const Home = () => {
+  const navigation = useNavigation();
+  const [name, setName] = useState("");
+  const [courseData, setCourseData] = useState([]);
+  const [appointmentData,setAppointmentData]=useState([]);
+  const { data, isSuccess } = useGetAppUserQuery();
+
+
+  // const localHost = "http://192.168.1.5:5000";
+   const localHost='https://hira-yogi.onrender.com';
+  useEffect(() => {
+    if (data && isSuccess && data.data) {
+      setName(data.data.name);
+    }
+  }, [data, isSuccess]);
+
+  const { data: course, isSuccess: courseIsSuccess } = useGetAllCourseQuery();
+  // console.log(course);
+
+  useEffect(() => {
+    if (course && courseIsSuccess && course.data) {
+      setCourseData(course.data);
+    }
+  }, [course, courseIsSuccess]);
+
+  const {data:appointment,isSuccess:appointmentIsSuccess}=useGetAppointmentBannerQuery();
+  
+
+  useEffect(() => {
+    if (appointment && appointmentIsSuccess && appointment.data) {
+      setAppointmentData(appointment?.data);
+    }
+  }, [appointment, appointmentIsSuccess]);
+
+  // console.log(appointmentData);
+  // console.log(course)
+
+  const renderItem = ({ item }) => {
+    const imageUrl = `${localHost}/courseFile/${item.courseImage_FileName}`;
+// console.log("Image URL:", imageUrl);
+    return (
+      <View style={{ marginRight: 20 }}>
+        <Image
+          source={{
+            uri: imageUrl,
+          }}
+          style={{ height: 135, width: 165, borderRadius: 20 }}
+          resizeMode="cover"
+          // onError={(error) => console.error("Image Load Error:", error)} 
+        />
+        <Text
+          style={{
+            fontSize: 14,
+            paddingHorizontal: 10,
+            width: 165,
+            fontFamily: "Poppins",
+            marginVertical: 5,
+          }}
+        >
+          {item.courseName}
+        </Text>
+      </View>
+    );
+  };
 
   return (
     <>
-    <View style={styles.container}>
-      <View style={styles.tasksWrapper}>
-        <View style={{ paddingTop: 5 }}>
-          <Avatar
-            rounded
-            source={{
-              uri: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-            }}
-            size={43}
-          />
-        </View>
-        <Text style={styles.sectionTitle}>Welcome, Kelvin</Text>
-        <View style={styles.Item}>
-          <Image
-            style={styles.AddItem}
-            source={require("../assets/notification-icon.png")}
-          />
-        </View>
-      </View>
+      <ScrollView style={{ backgroundColor: "#fff" }}>
+        <View style={styles.container}>
+          <View style={styles.tasksWrapper}>
+            <View style={{ paddingTop: 5 }}>
+              <Avatar
+                rounded
+                source={{
+                  uri: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+                }}
+                size={43}
+              />
+            </View>
+            <Text style={styles.sectionTitle}>Welcome, {name}</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Notification")}
+            >
+              <View style={styles.Item}>
+                <Image
+                  style={styles.AddItem}
+                  source={require("../assets/notification-icon.png")}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
 
-      <View style={styles.searchArea}>
-        <Image
-          style={styles.icon}
-          source={require("../assets/search-icon.png")}
+          <View style={styles.searchArea}>
+            <Image
+              style={styles.icon}
+              source={require("../assets/search-icon.png")}
+            />
+            <TextInput placeholder="Search" style={styles.input} />
+            <Image
+              style={styles.filter}
+              source={require("../assets/filter.png")}
+            />
+          </View>
+          <CarouselItem />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingHorizontal: 15,
+              margin: 5,
+            }}
+          >
+            <Text style={{ paddingTop: 5, fontSize: 16, fontWeight: "bold" }}>
+              Trending Course
+            </Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("SeeAllCourses")}
+            >
+              <Text
+                style={{
+                  paddingTop: 5,
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  color: "#333787",
+                }}
+              >
+                See All
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <FlatList
+          horizontal
+          data={courseData}
+          showsHorizontalScrollIndicator={false}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => item.id}
+          contentContainerStyle={{ marginHorizontal: 20 }}
         />
-        <TextInput placeholder="Search" style={styles.input} />
-        <Image style={styles.filter} source={require("../assets/filter.png")} />
-      </View>
-      <CarouselItem />
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          paddingHorizontal: 15,
-          margin:5,
-        }}
-      >
-        <Text style={{ paddingTop: 5, fontSize: 16, fontWeight: "bold" }}>
-          Trending Course
-        </Text>
-        <Text
+        <View
           style={{
-            paddingTop: 5,
-            fontSize: 16,
-            fontWeight: "bold",
-            color: "#333787",
+            flexDirection: "row",
+            paddingHorizontal: 15,
+            margin: 5,
           }}
         >
-          See All
-        </Text>
-      </View>
+          <Text style={{ paddingTop: 5, fontSize: 16, fontWeight: "bold" }}>
+            Appointment
+          </Text>
         </View>
-        <View
-        style={{
-          justifyContent: "center",
-          flex: 1,
-        //   marginTop: 5,
-        //   marginBottom: 7,
-          backgroundColor:"#ffffff",
-        }}
-      >
-        <ScrollView>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginLeft: 20,
-              marginRight: 20,
-             
-            }}
-          >
-            <View>
-              <Image
-                source={{
-                  uri: "https://images.unsplash.com/photo-1485217988980-11786ced9454?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-                }}
-                style={{ height: 135, width: 165, borderRadius: 20 }}
-                resizeMode="cover"
-              />
-              <Text
-                style={{
-                  fontSize: 14,
-                  // fontWeight: "bold",
-                  paddingHorizontal: 10,
-                  width: 165,
-                  fontFamily: 'Poppins',
-                  marginVertical:5,
-                }}
-              >
-                UI/UX Design master class
-              </Text>
-            </View>
-            <View>
-              <Image
-                source={{
-                  uri: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-                }}
-                style={{ height: 135, width: 165, borderRadius: 20 }}
-                resizeMode="cover"
-              />
-              <Text
-                style={{
-                  fontSize: 14,
-                  // fontWeight: "bold",
-                  paddingHorizontal: 10,
-                  width: 165,
-                  fontFamily: 'Poppins',
-                  marginVertical:5,
-                }}
-              >
-                Digital Marketing
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              margin: 20,
-            //   backgroundColor:"#ffffff",
-            }}
-          >
-            <View>
-              <Image
-                source={{
-                  uri: "https://images.unsplash.com/photo-1485217988980-11786ced9454?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-                }}
-                style={{ height: 135, width: 165, borderRadius: 20 }}
-                resizeMode="cover"
-              />
-              <Text
-                style={{
-                  fontSize: 14,
-                  // fontWeight: "bold",
-                  paddingHorizontal: 10,
-                  width: 165,
-                  fontFamily: 'Poppins',
-                  marginVertical:5,
-                }}
-              >
-                Office management master class
-              </Text>
-            </View>
-            <View>
-              <Image
-                source={{
-                  uri: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-                }}
-                style={{ height: 135, width: 165, borderRadius: 20 }}
-                resizeMode="cover"
-              />
-              <Text
-                style={{
-                  fontSize: 14,
-                  // fontWeight: "bold",
-                  paddingHorizontal: 10,
-                  width: 165,
-                  fontFamily: 'Poppins',
-                  marginVertical:5,
-                }}
-              >
-                Online Marketing
-              </Text>
-            </View>
-          </View>
-        </ScrollView>
-      </View>
-    
+        <TouchableOpacity
+          style={{
+            // padding:20,
+            width: 345,
+            height: 160,
+            borderRadius: 20,
+            alignItems: "center",
+            backgroundColor: "#ffff",
+            marginTop: 8,
+            justifyContent:'center',
+            marginLeft:20,
+            marginBottom:10
+          }}
+          onPress={() => navigation.navigate("Appointment")}
+        >
+          <Image
+            // source={{uri: `${localHost}/masterFile/${appointmentData.appointmentBanner_FileName}`}}
+            source={require("../assets/appointment.png")}
+            style={{ width: 345, height: 160, borderRadius: 20 }}
+            resizeMode="cover"
+          />
+        </TouchableOpacity>
+      </ScrollView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  container:{
-backgroundColor:"#ffffff",
+  container: {
+    backgroundColor: "#ffffff",
   },
   tasksWrapper: {
     paddingTop: 23,
@@ -208,7 +214,7 @@ backgroundColor:"#ffffff",
     fontWeight: "bold",
     width: 200,
     margin: 10,
-    fontFamily: 'Poppins',
+    fontFamily: "Poppins",
   },
 
   searchArea: {

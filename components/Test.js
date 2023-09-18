@@ -14,6 +14,7 @@ import { Dropdown } from "react-native-element-dropdown";
 // import DocumentPicker from "react-native-document-picker";
 import * as DocumentPicker from 'expo-document-picker';
 import { useNavigation } from '@react-navigation/native';
+import Header from "./Header";
 
 const data = [
   { label: "Item 1", value: "1" },
@@ -130,8 +131,10 @@ const Test = ({ navigation, route }) => {
   };
 
   return (
-    
+    <>
+    <Header title={"Test"} icon={require("../assets/back.png")} />
       <View style={styles.container}>
+        
         {renderLabel()}
         <Dropdown
           style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
@@ -415,7 +418,7 @@ const Test = ({ navigation, route }) => {
         }}
         /> */}
       </View>
-    
+      </>
   );
 };
 

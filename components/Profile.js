@@ -1,359 +1,249 @@
-import React, { useState } from "react";
+import React, { useEffect, useState} from "react";
 import {
-  View,
   Text,
+  View,
+  SafeAreaView,
   StyleSheet,
-  TextInput,
-  Image,
-  ScrollView,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { Avatar } from "react-native-elements";
-import * as WebBrowser from 'expo-web-browser';
-import { WebView } from "react-native-webview";
+import Header from "./Header";
+import { useGetAppUserQuery } from "../services/signUpApi";
 
-const Profile = ({navigation}) => {
-  const [showWebView, setShowWebView] = useState(true);
-
-  const handleLoad = () => {
-    setShowWebView(false);
-  };
-  const handlePress= () =>{
-    const url='https://www.iqraias.com/';
-    navigation.navigate('WebViewScreen',{ url });
-  }
-  return (
-    <>
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={{ alignItems: "center" }}>
-            <Avatar
-              rounded
-              source={{
-                uri: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-              }}
-              size={100}
-            />
-            <View style={{ alignItems: "center" }}>
-              <Text style={{ fontFamily: "Poppins", fontSize: 18 }}>
-                Kelvin Holmes
-              </Text>
-              <Text style={{ fontFamily: "Poppins", fontSize: 14 }}>
-                Edit Profile &nbsp;
-                <Image
-                  style={{ width: 16, height: 16, marginBottom: 1 }}
-                  source={require("../assets/profile_icons/edit-2.png")}
-                />
-              </Text>
-            </View>
-            <TouchableOpacity
-             onPress={handlePress}
-            // onPress={toggleWebView}
-            >
-            {/* {showWebView && (
-  <WebView
-    source={{ uri: 'https://example.com' }}
-    injectedJavaScript={`
-      setTimeout(function() {
-        window.open('https://example.com', '_blank');
-      }, 100);
-    `}
-    javaScriptEnabled={true}
-    domStorageEnabled={true}
-    startInLoadingState={true}
-    style={{ flex: 1 }}
-  />
-)} */}
-              <View style={[styles.shadowContainerStyle, { margin: 8 }]}>
-                <View
-                  style={{
-                    width: 360,
-                    height: 50,
-                    backgroundColor: "white",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    padding: 15,
-                    borderRadius: 20,
-                  }}
-                >
-                  <View style={{ marginBottom: 4 }}>
-                    <Image
-                      style={{ width: 14, height: 14, margin: 5 }}
-                      source={require("../assets/profile_icons/global.png")}
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      marginRight: 170,
-                      paddingTop: 1,
-                      width: 100,
-                      height: 30,
-                      fontSize: 14,
-                      fontFamily: "Poppins",
-                      //   fontWeight: "bold",
-                    }}
-                  >
-                    Iqraias.com
-                  </Text>
-                  <View style={{ marginBottom: 6 }}>
-                    <Image
-                      style={{ width: 14, height: 14, margin: 5 }}
-                      source={require("../assets/profile_icons/arrow-right.png")}
-                    />
-                  </View>
-                </View>
-              </View>
-            </TouchableOpacity>
-            <WebView 
-              source={{uri:'https://www.iqraias.com/'}}
-              onLoad={handleLoad}
-            />
+const Profile = ({ navigation }) => {
+  const [name, setName] = useState("");
+  const [email,setEmail]=useState('');
+  const { data, isSuccess } = useGetAppUserQuery();
+  
  
-            <View style={[styles.shadowContainerStyle, { margin: 8 }]}>
-              <View
-                style={{
-                  width: 360,
-                  height: 50,
-                  backgroundColor: "white",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  padding: 15,
-                  borderRadius: 20,
-                }}
-              >
-                <Image
-                  style={{ width: 14, height: 14, margin: 5 }}
-                  source={require("../assets/profile_icons/message-minus.png")}
-                />
 
-                <Text
-                  style={{
-                    marginRight: 69,
-                    paddingTop: 2,
-                    width: 200,
-                    height: 30,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
-                    //   fontWeight: "bold",
-                  }}
-                >
-                  Current Affairs
-                </Text>
+  useEffect(() => {
+    if (data && isSuccess && data.data) {
+      setName(data.data.name);
+      setEmail(data.data.email);
+    }
+  }, [data, isSuccess]);
+  // const handleLogout= async()=>{ //little bit incomplete
+  //   await removeToken('token')
+  //   navigation.navigate("Sign Up")
+  //   console.log("token is remove!")
+  // }
+ 
 
-                <Image
-                  style={{ width: 14, height: 14, margin: 5 }}
-                  source={require("../assets/profile_icons/arrow-right.png")}
-                />
-              </View>
-            </View>
-            <View style={[styles.shadowContainerStyle, { margin: 8 }]}>
-              <View
-                style={{
-                  width: 360,
-                  height: 50,
-                  backgroundColor: "white",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  padding: 15,
-                  borderRadius: 20,
-                }}
-              >
-                <Image
-                  style={{ width: 14, height: 14, margin: 5 }}
-                  source={require("../assets/profile_icons/frame.png")}
-                />
-
-                <Text
-                  style={{
-                    marginRight: 69,
-                    paddingTop: 2,
-                    width: 200,
-                    height: 30,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
-                    //   fontWeight: "bold",
-                  }}
-                >
-                  Saved Course
-                </Text>
-
-                <Image
-                  style={{ width: 14, height: 14, margin: 5 }}
-                  source={require("../assets/profile_icons/arrow-right.png")}
-                />
-              </View>
-            </View>
-            <View style={[styles.shadowContainerStyle, { margin: 8 }]}>
-              <View
-                style={{
-                  width: 360,
-                  height: 50,
-                  backgroundColor: "white",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  padding: 15,
-                  borderRadius: 20,
-                }}
-              >
-                <Image
-                  style={{ width: 14, height: 14, margin: 5 }}
-                  source={require("../assets/profile_icons/info-circle.png")}
-                />
-
-                <Text
-                  style={{
-                    marginRight: 69,
-                    paddingTop: 2,
-                    width: 200,
-                    height: 30,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
-                    //   fontWeight: "bold",
-                  }}
-                >
-                  Help Center
-                </Text>
-
-                <Image
-                  style={{ width: 14, height: 14, margin: 5 }}
-                  source={require("../assets/profile_icons/arrow-right.png")}
-                />
-              </View>
-            </View>
-            <View style={[styles.shadowContainerStyle, { margin: 8 }]}>
-              <View
-                style={{
-                  width: 360,
-                  height: 50,
-                  backgroundColor: "white",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  padding: 15,
-                  borderRadius: 20,
-                }}
-              >
-                <Image
-                  style={{ width: 14, height: 14, margin: 5 }}
-                  source={require("../assets/profile_icons/bag-timer.png")}
-                />
-
-                <Text
-                  style={{
-                    marginRight: 69,
-                    paddingTop: 2,
-                    width: 200,
-                    height: 30,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
-                    //   fontWeight: "bold",
-                  }}
-                >
-                  Privacy Policy
-                </Text>
-
-                <Image
-                  style={{ width: 14, height: 14, margin: 5 }}
-                  source={require("../assets/profile_icons/arrow-right.png")}
-                />
-              </View>
-            </View>
-            <View style={[styles.shadowContainerStyle, { margin: 8 }]}>
-              <View
-                style={{
-                  width: 360,
-                  height: 50,
-                  backgroundColor: "white",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  padding: 15,
-                  borderRadius: 20,
-                }}
-              >
-                <Image
-                  style={{ width: 14, height: 14, margin: 5 }}
-                  source={require("../assets/profile_icons/like.png")}
-                />
-
-                <Text
-                  style={{
-                    marginRight: 69,
-                    paddingTop: 2,
-                    width: 200,
-                    height: 30,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
-                    //   fontWeight: "bold",
-                  }}
-                >
-                  Feedback
-                </Text>
-
-                <Image
-                  style={{ width: 14, height: 14, margin: 5 }}
-                  source={require("../assets/profile_icons/arrow-right.png")}
-                />
-              </View>
-            </View>
-            <View
+  return (
+    <View style={styles.container}>
+      <Header title={"Profile"} icon={require("../assets/back.png")} />
+      <View style={{ margin: 20, flexDirection: "row" }}>
+        <Avatar
+          rounded
+          source={{
+            uri: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
+          }}
+          size={75}
+        />
+        <View style={{ marginLeft: 20, marginTop: 15 }}>
+          <Text
+           style={{ fontFamily: "Poppins", fontSize: 16 }}
+           >
+            {name}
+       
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              fontFamily: "Poppins",
+              color: "gray",
+              marginTop: 3,
+            }}
+          >
+        {email}
+          </Text>
+        </View>
+      </View>
+      <TouchableOpacity onPress={() => navigation.navigate("MyAppointment")}>
+        <View
+          style={{
+            marginTop: 10,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            // backgroundColor:'pink'
+            height: 45,
+            padding: 10,
+          }}
+        >
+          <Image
+            style={{ width: 20, height: 20, marginLeft: 20 }}
+            source={require("../assets/profile-icon/shopping-bag.png")}
+          />
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: '200',
+              marginRight: 123,
+              fontFamily: "Poppins",
+            }}
+          >
+            My Appointment
+          </Text>
+          <Image
+            style={{ width: 20, height: 20, marginRight: 20 }}
+            source={require("../assets/profile-icon/arrow-right.png")}
+          />
+        </View>
+      </TouchableOpacity>
+      <View style={styles.hr} />
+      <TouchableOpacity onPress={() => navigation.navigate("MyDetails")}>
+        <View
+          style={{
+            marginTop: 10,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            height: 45,
+            padding: 10,
+          }}
+        >
+          <Image
+            style={{ width: 20, height: 20, marginLeft: 20 }}
+            source={require("../assets/profile-icon/note.png")}
+          />
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: '200',
+              marginRight: 170,
+              fontFamily: "Poppins",
+              // backgroundColor:'yellow'
+            }}
+          >
+            My Details
+          </Text>
+          <Image
+            style={{ width: 20, height: 20, marginRight: 20 }}
+            source={require("../assets/profile-icon/arrow-right.png")}
+          />
+        </View>
+      </TouchableOpacity>
+   
+      <View style={styles.hr} />
+      <TouchableOpacity >
+        <View
+          style={{
+            marginTop: 10,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            height: 45,
+            padding: 10,
+          }}
+        >
+          <Image
+            style={{ width: 20, height: 20, marginLeft: 20 }}
+            source={require("../assets/profile-icon/location.png")}
+          />
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: '200',
+              marginRight: 120,
+              fontFamily: "Poppins",
+             
+            }}
+          >
+            Delivery Address
+          </Text>
+          <Image
+            style={{ width: 20, height: 20, marginRight: 20 }}
+            source={require("../assets/profile-icon/arrow-right.png")}
+          />
+        </View>
+      </TouchableOpacity>
+      <View style={styles.hr} />
+      <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
+        <View
+          style={{
+            marginTop: 10,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            // backgroundColor:'pink'
+            height: 45,
+            padding: 10,
+          }}
+        >
+          <Image
+            style={{ width: 20, height: 20, marginLeft: 20 }}
+            source={require("../assets/profile-icon/notification.png")}
+          />
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: '200',
+              marginRight: 150,
+              fontFamily: "Poppins",
+            }}
+          >
+            Notifications
+          </Text>
+          <Image
+            style={{ width: 20, height: 20, marginRight: 20 }}
+            source={require("../assets/profile-icon/arrow-right.png")}
+          />
+        </View>
+      </TouchableOpacity>
+      <View style={styles.hr} />
+     
+  
+      {/* <TouchableOpacity
+      onPress={handleLogout}
+      > */}
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <View
+            style={{
+              margin: 30,
+              backgroundColor: "#dcdcdc",
+              height: 50,
+              width: "75%",
+              borderRadius: 10,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              style={{ width: 20, height: 20, marginLeft: 20 }}
+              source={require("../assets/profile-icon/logout.png")}
+            />
+            <Text
               style={{
-                marginTop: 20,
-                marginBottom: 20,
-                marginLeft: 10,
-                marginRight: 10,
+                fontFamily: "Poppins",
+                fontSize: 16,
+                fontWeight: "bold",
+                color: "#e08a44",
+                marginRight: 120,
               }}
             >
-              <View
-                style={{
-                  width: 360,
-                  height: 50,
-                  backgroundColor: "white",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  padding: 15,
-                  borderRadius: 20,
-                  borderColor: "#333787",
-                  borderWidth: 1,
-                }}
-              >
-                <Text
-                  style={{
-                    textAlign: "center",
-                    paddingBottom: 4,
-                    width: "100%",
-                    height: 30,
-                    fontSize: 14,
-                    fontFamily: "Poppins",
-                    color: "#333787",
-                  }}
-                >
-                  Logout
-                </Text>
-              </View>
-            </View>
+              Logout
+            </Text>
           </View>
         </View>
-      </ScrollView>
-    </>
+      {/* </TouchableOpacity> */}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    // paddingTop: 20,
+    flex: 1,
+    // padding:16,
   },
-  shadowContainerStyle: {
-    // borderWidth: 1,
-    borderRadius: 20,
-    // borderColor: "#333787",
-    borderBottomWidth: 0,
-    shadowColor: "#333787",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 10,
-    shadowRadius: 5,
-    elevation: 10,
+  hr: {
+    position: "relative",
+    width: "100%",
+    borderBottomColor: "gray",
+    borderBottomWidth: 1,
+    opacity: 0.1,
+    marginTop: 5,
+    
   },
 });
 

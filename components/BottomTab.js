@@ -9,199 +9,147 @@ import UserIcon from "../assets/icons_navbar/user_icon.png";
 import UserActiveIcon from "../assets/icons_navbar/user_active.png";
 import CourseActiveIcon from "../assets/icons_navbar/course_active.png";
 import CourseIcon from "../assets/icons_navbar/course_icon.png";
-import AffairsActiveIcon from '../assets/icons_navbar/affairs_active.png';
-import AffairsIcon from '../assets/icons_navbar/affairs_icon.png';
-import Home from './Home';
+import AffairsActiveIcon from "../assets/icons_navbar/affairs_active.png";
+import AffairsIcon from "../assets/icons_navbar/affairs_icon.png";
+import Home from "./Home";
 import Profile from "./Profile";
 import CurrentAffairs from "./CurrentAffairs";
-import CurrentPage from "./CurrentPage";
-import Course from "./Course";
-import Test from './Test';
+// import Course from "./Course";
+import Appointment from "./Appointment";
+import AllCourses from "./seeAllCourses/AllCourses";
+import MyLearning from "./myLearning/MyLearning";
 
 const Tab = createBottomTabNavigator();
-
-
-// const TestSeries = () => {
-//   return (
-//     <View
-//       style={{
-//         backgroundColor: "#ffffff",
-//         justifyContent: "center",
-//         flex: 1,
-//         alignItems: "center",
-//       }}
-//     >
-//       <Text style={{ fontSize: 25 }}>TestSeries</Text>
-//     </View>
-//   );
-// };
-
-// const Course = () => {
-//   return (
-//     <View
-//       style={{
-//         backgroundColor: "#ffffff",
-//         justifyContent: "center",
-//         flex: 1,
-//         alignItems: "center",
-//       }}
-//     >
-//       <Text style={{ fontSize: 25 }}>Course</Text>
-//     </View>
-//   );
-// };
-
 
 const BottomTab = () => {
   return (
     <>
-   
       <Tab.Navigator
-        initialRouteName='Home'
+        initialRouteName="Home"
         screenOptions={{
           tabBarShowLabel: true,
-          tabBarActiveTintColor: "blue",
+          tabBarActiveTintColor: "#e08a44",
           tabBarStyle: {
             height: 55,
             flexDirection: "row",
             alignItems: "center",
             width: "100%",
-            borderTopLeftRadius:30,
-            borderTopRightRadius:30,
+            borderTopLeftRadius: 30,
+            borderTopRightRadius: 30,
             elevation: 10,
-            backgroundColor:"#ffffff",
-          
+            backgroundColor: "#ffffff",
           },
-        }}  
-     
+        }}
       >
         <Tab.Screen
-          name={'Home'}
+          name={"Home"}
           component={Home}
           options={{
             headerShown: false,
-            tabBarLabelStyle:{marginTop:18},
-            tabBarLabel:'Home',
-            
-            tabBarIcon: ({focused}) => (
+            tabBarLabelStyle: { marginTop: 18 },
+            tabBarLabel: "Home",
+
+            tabBarIcon: ({ focused }) => (
               <Image
-              source={focused ? HomeActiveIcon : HomeIcon}
+                source={focused ? HomeActiveIcon : HomeIcon}
                 style={{
                   width: 20,
                   height: 20,
-                  marginTop:18,
+                  marginTop: 18,
                   // marginRight:25,
-                  flexDirection:'row',
-                  justifyContent:'space-between',
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                 }}
               />
             ),
           }}
         />
         <Tab.Screen
-          name='Course'
-          component={Course}
+          name="Course"
+          component={AllCourses}
           options={{
-            title:"Course",
-            // headerShown: true,
-            tabBarLabelStyle:{marginTop:18},
-            tabBarLabel:'Course',
+            title: "Course",
+            headerShown: false,
+            tabBarLabelStyle: { marginTop: 18 },
+            tabBarLabel: "Course",
             tabBarIcon: ({ focused }) => (
               <Image
                 source={focused ? CourseActiveIcon : CourseIcon}
                 style={{
                   width: 20,
                   height: 20,
-                  marginTop:18,
+                  marginTop: 18,
                   // marginRight:25,
-                  flexDirection:'row',
-                  justifyContent:'space-between',
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                 }}
               />
             ),
           }}
         />
-        {/* <Tab.Screen
-          name="CurrentPage"
-          component={CurrentPage}
-          options={{
-            headerShown: true,
-            tabBarLabelStyle:{marginLeft:30,marginTop:30,width:50},
-            tabBarLabel:'CurrentAffairs',
-            tabBarIcon: ({ focused }) => (
-              <Image
-              source={focused ? TestActiveIcon : TestIcon}
-                style={{
-                  width: 25,
-                  height: 25,
-                  marginTop:30,
-                  marginLeft:30,
-                }}
-              />
-            ),
-          }}
-        /> */}
+
         <Tab.Screen
-          name="Affairs"
-          component={CurrentAffairs}
-          options={{
-            headerShown: true,
-            tabBarLabelStyle:{marginTop:18},
-            tabBarLabel:'Affairs',
-            tabBarIcon: ({ focused }) => (
-              <Image
-              source={focused ? AffairsActiveIcon : AffairsIcon}
-                style={{
-                  width: 20,
-                  height: 20,
-                  marginTop:18,
-                  // marginRight:25,
-                  flexDirection:'row',
-                  justifyContent:'space-between',
-                }}
-              />
-            ),
-          }}
-        />
-         <Tab.Screen
           name="Test Series"
-          component={Test}
+          component={MyLearning}
           options={{
-            headerShown: true,
-            tabBarLabelStyle:{marginTop:18},
-            tabBarLabel:'Test',
+            headerShown: false,
+            tabBarLabelStyle: { marginTop: 18 },
+            tabBarLabel: "My Learning",
             tabBarIcon: ({ focused }) => (
               <Image
-              source={focused ? TestActiveIcon : TestIcon}
+                source={focused ? TestActiveIcon : TestIcon}
                 style={{
                   width: 15,
                   height: 20,
-                  marginTop:18,
+                  marginTop: 18,
                   // marginRight:25,
-                  flexDirection:'row',
-                  justifyContent:'space-between',
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                 }}
               />
             ),
           }}
         />
+        <Tab.Screen
+          name="Affairs"
+          component={Appointment}
+          options={{
+            headerShown: false,
+            tabBarLabelStyle: { marginTop: 18 },
+            tabBarLabel: "Appointment",
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={focused ? AffairsActiveIcon : AffairsIcon}
+                style={{
+                  width: 20,
+                  height: 20,
+                  marginTop: 18,
+                  // marginRight:25,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              />
+            ),
+          }}
+        />
+
         <Tab.Screen
           name="Profile"
           component={Profile}
           options={{
-            headerShown: true,
-            tabBarLabelStyle:{marginTop:18},
-            tabBarLabel: 'Profile',
+            headerShown: false,
+            tabBarLabelStyle: { marginTop: 20 },
+            tabBarLabel: "Profile",
             tabBarIcon: ({ focused }) => (
               <Image
-              source={focused ? UserActiveIcon : UserIcon}
+                source={focused ? UserActiveIcon : UserIcon}
                 style={{
                   width: 20,
-                  height: 20,
-                  marginTop:18,
+                  height: 23,
+                  marginTop: 20,
                   // marginRight:25,
-                  flexDirection:'row',
-                  justifyContent:'space-between',
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                 }}
               />
             ),
@@ -212,6 +160,4 @@ const BottomTab = () => {
   );
 };
 
-
 export default BottomTab;
-

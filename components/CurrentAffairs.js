@@ -8,6 +8,7 @@ import {
     TextInput,
     FlatList,
   } from "react-native";
+  import Header from './Header';
 
 
   const datalist = [
@@ -39,7 +40,8 @@ import {
 const CurrentAffairs = () => {
     return (<>
     <View style={styles.container}>
-     <View style={styles.searchArea}>
+    <Header title={"My Learning"} icon={require("../assets/back.png")} />
+     {/* <View style={styles.searchArea}>
         <Image
           style={styles.icon}
           source={require("../assets/search-icon.png")}
@@ -178,211 +180,8 @@ const CurrentAffairs = () => {
             </View>
         </View>);
         }}
-        />
-        {/* second */}
-        {/* <View
-          style={[
-            styles.shadowContainerStyle,
-            {
-              width: 345,
-              //   height: 100,
-              backgroundColor: "#fff",
-              borderRadius: 20,
-              marginTop: 10,
-              marginLeft: 18,
-              marginRight: 18,
-              //   flexDirection: "row",
-              //   justifyContent: "space-between",
-            },
-          ]}
-        >
-             <View
-              style={{
-                width: 65,
-                height: 65,
-                backgroundColor: "pink",
-                marginTop: 10,
-                marginRight:10,
-                marginLeft:10,
-                marginBottom:6,
-                borderRadius: 15,
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <Image
-                style={{
-                  width: 65,
-                  height: 65,
-                  borderRadius: 15,
-                  borderWidth: 0.4,
-                  borderColor: "#2A3C79",
-                }}
-                source={require("../assets/1.jpg")}
-                resizeMode="cover"
-              />
-              <View
-                style={{
-                  marginRight: 30,
-                  width: 200,
-                  paddingLeft: 10,
-                  paddingTop: 10,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 14,
-                    fontWeight: "100",
-                    fontFamily: "Poppins",
-                    marginBottom: 1,
-                  }}
-                >
-                  Story of my life
-                </Text>
-                <View
-                  style={{
-                    width: 85,
-                    height: 15,
-                    borderRadius: 25,
-                    backgroundColor: "#e1e5f5",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 10,
-                      // fontWeight: "bold",
-                      // textAlign: "center",
-                      alignItems: "center",
-                      color: "#2A3C79",
-                      // padding: 2,
-                      fontFamily: "Poppins",
-                    }}
-                  >
-                    1 hours,20 min
-                  </Text>
-                </View>
-              </View>
-
-              <View
-                style={{
-                  marginTop: 15,
-                  marginRight: 5,
-                  alignItems: "center",
-                  paddingRight: 5,
-                  width: 30,
-                }}
-              >
-                  <Image
-                    style={{ width: 24, height: 24 }}
-                    source={require("../assets/video-circle.png")}
-                  />
-              </View>
-            </View>
-        </View> */}
-        {/* Third */}
-        {/* <View
-          style={[
-            styles.shadowContainerStyle,
-            {
-              width: 345,
-              //   height: 100,
-              backgroundColor: "#fff",
-              borderRadius: 20,
-              marginTop: 10,
-              marginLeft: 18,
-              marginRight: 18,
-              //   flexDirection: "row",
-              //   justifyContent: "space-between",
-            },
-          ]}
-        >
-             <View
-              style={{
-                width: 65,
-                height: 65,
-                backgroundColor: "pink",
-                marginTop: 10,
-                marginRight:10,
-                marginLeft:10,
-                marginBottom:6,
-                borderRadius: 15,
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <Image
-                style={{
-                  width: 65,
-                  height: 65,
-                  borderRadius: 15,
-                  borderWidth: 0.4,
-                  borderColor: "#2A3C79",
-                }}
-                source={require("../assets/1.jpg")}
-                resizeMode="cover"
-              />
-              <View
-                style={{
-                  marginRight: 30,
-                  width: 200,
-                  paddingLeft: 10,
-                  paddingTop: 10,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 14,
-                    fontWeight: "100",
-                    fontFamily: "Poppins",
-                    marginBottom: 1,
-                  }}
-                >
-                  How to win PES
-                </Text>
-                <View
-                  style={{
-                    width: 85,
-                    height: 15,
-                    borderRadius: 25,
-                    backgroundColor: "#e1e5f5",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 10,
-                      // fontWeight: "bold",
-                      // textAlign: "center",
-                      alignItems: "center",
-                      color: "#2A3C79",
-                      // padding: 2,
-                      fontFamily: "Poppins",
-                    }}
-                  >
-                    2 hours,45 min
-                  </Text>
-                </View>
-              </View>
-
-              <View
-                style={{
-                  marginTop: 15,
-                  marginRight: 5,
-                  alignItems: "center",
-                  paddingRight: 5,
-                  width: 30,
-                }}
-              >
-                  <Image
-                    style={{ width: 24, height: 24 }}
-                    source={require("../assets/video-circle.png")}
-                  />
-              </View>
-            </View>
-        </View> */}
+        /> */}
+     
       </View>
      
     </>);
